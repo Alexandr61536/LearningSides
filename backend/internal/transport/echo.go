@@ -9,11 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary Echo
-// @Tags testing
-// @ID echo
-// @Router /echo [get]
-
+// @Summary	Echo
+// @Tags	testing
+// @ID		echo
+// @Router	/echo [get]
 func Echo(c *gin.Context) {
 
 	w, r := c.Writer, c.Request

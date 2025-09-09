@@ -1,11 +1,55 @@
 basePath: /
+definitions:
+  transport.RequestStructure:
+    properties:
+      age:
+        type: integer
+      name:
+        type: string
+    type: object
+  transport.ResponseStructure:
+    properties:
+      value:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
   description: API for LearningSides
   title: LearningSides
   version: "1.0"
-paths: {}
+paths:
+  /echo:
+    get:
+      operationId: echo
+      responses: {}
+      summary: Echo
+      tags:
+      - testing
+  /parsing:
+    post:
+      consumes:
+      - application/json
+      operationId: parsing
+      parameters:
+      - description: User info
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/transport.RequestStructure'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/transport.ResponseStructure'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a string with name and age
+      tags:
+      - testing
 securityDefinitions:
   ApiKeyAuth:
     in: header

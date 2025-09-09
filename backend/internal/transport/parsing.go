@@ -17,16 +17,15 @@ type ResponseStructure struct {
 	Value string
 }
 
-// @Summary Get a string with name and age
-// @Security ApiKeyAuth
-// @Tags testing
-// @ID parsing
-// @Accept json
-// @Produce json
-// @Param body RequestStructure true "User info"
-// @Success 200 {object} ResponseStructure
-// @Router /parsing [post]
-
+// @Summary		Get a string with name and age
+// @Security	ApiKeyAuth
+// @Tags		testing
+// @ID			parsing
+// @Accept		json
+// @Produce		json
+// @Param		body body RequestStructure true "User info"
+// @Success 	200	{object} ResponseStructure
+// @Router		/parsing [post]
 func Parsing(c *gin.Context) {
 
 	w, r := c.Writer, c.Request

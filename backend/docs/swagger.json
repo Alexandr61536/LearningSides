@@ -8,7 +8,78 @@
     },
     "host": "localhost:8080",
     "basePath": "/",
-    "paths": {},
+    "paths": {
+        "/echo": {
+            "get": {
+                "tags": [
+                    "testing"
+                ],
+                "summary": "Echo",
+                "operationId": "echo",
+                "responses": {}
+            }
+        },
+        "/parsing": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "testing"
+                ],
+                "summary": "Get a string with name and age",
+                "operationId": "parsing",
+                "parameters": [
+                    {
+                        "description": "User info",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/transport.RequestStructure"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/transport.ResponseStructure"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "transport.RequestStructure": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "transport.ResponseStructure": {
+            "type": "object",
+            "properties": {
+                "value": {
+                    "type": "string"
+                }
+            }
+        }
+    },
     "securityDefinitions": {
         "ApiKeyAuth": {
             "type": "apiKey",
