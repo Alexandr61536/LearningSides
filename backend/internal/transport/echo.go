@@ -5,9 +5,18 @@ import (
 	"io"
 	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func Echo(w http.ResponseWriter, r *http.Request) {
+// @Summary Echo
+// @Tags testing
+// @ID echo
+// @Router /echo [get]
+
+func Echo(c *gin.Context) {
+
+	w, r := c.Writer, c.Request
 
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)

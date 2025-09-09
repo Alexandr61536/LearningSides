@@ -2,9 +2,10 @@ package transport
 
 import (
 	"fmt"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func Root(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Go is listening")
+func Root(c *gin.Context) {
+	fmt.Fprintf(c.Writer, "Go is listening")
 }

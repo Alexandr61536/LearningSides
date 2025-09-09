@@ -1,20 +1,23 @@
 package transport
 
 import (
+	_ "backend/docs"
 	"fmt"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func Listener() {
+	r := gin.Default()
 	fmt.Println(">>> Listener started")
-	http.HandleFunc("/", Root)
-	http.HandleFunc("/echo", Echo)
-	http.HandleFunc("/parsing", Parsing)
+
+	r.GET("/", Root)
+	r.GET("/echo", Echo)
+	r.POST("/parsing", Parsing)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	fmt.Println("Listentig port 8080...")
-	err := http.ListenAndServe(":8080", nil)
-
-	if err != nil {
-		fmt.Println("Error starting listening:", err)
-	}
+	r.Run(":8080")
 }

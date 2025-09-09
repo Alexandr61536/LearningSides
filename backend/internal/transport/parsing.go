@@ -4,7 +4,8 @@ import (
 	"backend/internal/transport/TransportHelpers"
 	"encoding/json"
 	"fmt"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type RequestStructure struct {
@@ -16,7 +17,19 @@ type ResponseStructure struct {
 	Value string
 }
 
-func Parsing(w http.ResponseWriter, r *http.Request) {
+// @Summary Get a string with name and age
+// @Security ApiKeyAuth
+// @Tags testing
+// @ID parsing
+// @Accept json
+// @Produce json
+// @Param body RequestStructure true "User info"
+// @Success 200 {object} ResponseStructure
+// @Router /parsing [post]
+
+func Parsing(c *gin.Context) {
+
+	w, r := c.Writer, c.Request
 
 	defer r.Body.Close()
 
