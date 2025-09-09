@@ -1,9 +1,9 @@
 package transport
 
 import (
+	"backend/internal/transport/TransportHelpers"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -18,28 +18,25 @@ type ResponseStructure struct {
 
 func Parsing(w http.ResponseWriter, r *http.Request) {
 
-	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	defer r.Body.Close()
+
+	if !TransportHelpers.CheckPost(w, r) {
 		return
 	}
 
-	contentType := r.Header.Get("Content-Type")
-	if contentType != "application/json" {
-		http.Error(w, "Content-Type must be application/json", http.StatusUnsupportedMediaType)
+	if !TransportHelpers.CheckJSON(w, r) {
 		return
 	}
 
 	var body RequestStructure
 
 	err := json.NewDecoder(r.Body).Decode((&body))
-	if err != nil {
-		http.Error(w, "Error reading request body", http.StatusBadRequest)
+
+	if TransportHelpers.ProcessErrorCS(w, err, "Error reading request body") {
 		return
 	}
-	defer r.Body.Close()
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	TransportHelpers.FormJsonHeader(w, r)
 
 	response_body := ResponseStructure{
 		Value: fmt.Sprintf("Your name is %s and your age is %d", body.Name, body.Age),
@@ -47,12 +44,14 @@ func Parsing(w http.ResponseWriter, r *http.Request) {
 
 	response_body_marshaled, err := json.Marshal(response_body)
 
-	if err != nil {
-		fmt.Printf("Error marshaling response body")
+	if TransportHelpers.ProcessErrorSS(err, "Error marshaling response body") {
 		return
 	}
 
-	if _, err := w.Write(response_body_marshaled); err != nil {
-		log.Printf("Error writing response: %v", err)
-	}
+	devnull, err := w.Write(response_body_marshaled)
+
+	devnull++
+
+	TransportHelpers.ProcessErrorSS(err, fmt.Sprintf("Error writing response: %v", err))
+
 }
