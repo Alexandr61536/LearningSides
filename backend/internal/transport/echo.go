@@ -9,10 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type EchoBody interface{}
+
 // @Summary	Echo
 // @Tags	testing
 // @ID		echo
-// @Router	/echo [get]
+// @Param	body body EchoBody true "Object to be echoed"
+// @Router	/echo [post]
 func Echo(c *gin.Context) {
 
 	w, r := c.Writer, c.Request

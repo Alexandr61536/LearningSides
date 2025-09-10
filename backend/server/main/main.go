@@ -1,8 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
+	"github.com/joho/godotenv"
+
+	"backend/internal/database"
 	"backend/internal/transport"
 )
 
@@ -18,6 +21,11 @@ import (
 // @name Authorization
 
 func main() {
-	fmt.Println("Starting...")
+	log.Println("Starting...")
+	if err := godotenv.Load(); err != nil {
+		log.Print("No .env file found")
+	}
+
+	database.InitDB()
 	transport.Listener()
 }

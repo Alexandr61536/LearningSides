@@ -1,2 +1,4 @@
 # Setup commands
 setup.txt
+database.db
+.env

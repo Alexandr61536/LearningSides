@@ -16,12 +16,21 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/echo": {
-            "get": {
+            "post": {
                 "tags": [
                     "testing"
                 ],
                 "summary": "Echo",
                 "operationId": "echo",
+                "parameters": [
+                    {
+                        "description": "Object to be echoed",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {}
+                    }
+                ],
                 "responses": {}
             }
         },

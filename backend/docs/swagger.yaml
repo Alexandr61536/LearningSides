@@ -20,8 +20,14 @@ info:
   version: "1.0"
 paths:
   /echo:
-    get:
+    post:
       operationId: echo
+      parameters:
+      - description: Object to be echoed
+        in: body
+        name: body
+        required: true
+        schema: {}
       responses: {}
       summary: Echo
       tags:
