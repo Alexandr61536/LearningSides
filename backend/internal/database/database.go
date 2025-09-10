@@ -56,7 +56,7 @@ func InitDB() {
 			log.Fatal("Can`t hash master password")
 		}
 
-		db.Create(&models.User{Login: master_login, Password: hash_pass})
+		db.Create(&models.User{Login: master_login, Password: hash_pass, Role: "admin"})
 		log.Println("Created master account")
 
 	} else {
